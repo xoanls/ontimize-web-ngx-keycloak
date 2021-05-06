@@ -1,0 +1,13 @@
+{
+  "name": "ontimize-web-ngx-keycloak",
+  "version": "8.0.0-SNAPSHOT-0",
+  "dependencies": {
+    "keycloak-angular": "~7.2.0",
+    "keycloak-js": "~9.0.3"
+  },
+  "peerDependencies": {
+    "@angular/common": "^8.2.14",
+    "@angular/core": "^8.2.14",
+    "ontimize-web-ngx": "^8.2.0"
+  }
+}
