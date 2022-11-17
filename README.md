@@ -1,4 +1,4 @@
-# OntimizeWebNgxKeycloak
+# OntimizeWeb Keycloak
 
 This library helps to use Keycloak in OntimizeWeb applications. It provides  the implementation of the authentication service from [ontimize-web-ngx](https://github.com/OntimizeWeb/ontimize-web-ngx) using [keycloak-angular](https://www.npmjs.com/package/keycloak-angular).
 
@@ -7,7 +7,7 @@ This library helps to use Keycloak in OntimizeWeb applications. It provides  the
 Run the following command in order to install OntimizeWeb Keycloak library:
 
 ```sh
-npm install ontimize-web-ngx-keycloak
+npm install ontimize-web-ngx-keycloak --save
 ```
 
 ## Setup
