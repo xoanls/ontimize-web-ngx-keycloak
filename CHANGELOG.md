@@ -1,4 +1,4 @@
-## 8.0.1
+## 8.1.0 (2022-02-27)
 ### Features
 * **OKeycloakAuthService**: `keycloakService` attribute is now public ([71f0e0c](https://github.com/OntimizeWeb/ontimize-web-ngx-keycloak/commit/71f0e0c))
 
