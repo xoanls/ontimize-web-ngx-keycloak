@@ -1,52 +1,48 @@
-# OntimizeWeb Keycloak
+<h1 align="center">
+  <div style="display:inline-block;vertical-align: middle;">
+    <a name="logo" href="https://ontimizeweb.github.io/docs/v8/keycloak/">
+      Ontimize Web Keycloak
+    </a>
+  </div>
+</h1>
+
+<p align="center">
+  <a href="#-introduction">Introduction</a> •
+  <a href="#rocket-demo">Demo</a> •
+  <a href="#-ideas">Ideas</a> •
+  <a href="#gear-development">Development</a>
+</p>
+
+## 📜 Introduction
 
 This library helps to use Keycloak in OntimizeWeb applications. It provides  the implementation of the authentication service from [ontimize-web-ngx](https://github.com/OntimizeWeb/ontimize-web-ngx) using [keycloak-angular](https://www.npmjs.com/package/keycloak-angular).
 
-## Installation
+### 📖 Documentation
 
-Run the following command in order to install OntimizeWeb Keycloak library:
+Check out our [documentation site](https://ontimizeweb.github.io/docs/v8/keycloak/overview/) to learn how to install and use it into an OntimizeWeb application.
 
-```sh
-npm install ontimize-web-ngx-keycloak --save
+## :rocket: Demo
+
+Check out our demo application using this module in the following [link](https://github.com/OntimizeWeb/ontimize-web-ngx-keycloak-demo).
+
+## 💡 Ideas
+
+We would love any feedback you have or to know when you encounter issues, by filing an issue report on this repo.
+
+## :gear: Development
+
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.21.
+
+### Installation
+
+Follow the next steps:
+
+  - cd repository root
+```bash
+npm install
 ```
 
-## Setup
+### Build `ontimize-web-ngx-keycloack`
 
-In order use Keycloak as the default authentication implementation for your OntimizeWeb application you should provide the `OKeycloakAuthService` using the injection token `O_AUTH_SERVICE` in your `AppModule`. You have to provide also the configuration for Keycloak using the injection token `O_KEYCLOAK_OPTIONS`.
-
-Use the code provided below as an example. In this process ensure that the configuration you are providing matches that of your client as configured in Keycloak.
-
-```ts
-import { KeycloakOptions, O_KEYCLOAK_OPTIONS, OKeycloakAuthService, OntimizeKeycloakModule } from 'ontimize-web-ngx-keycloak';
-import { AppComponent } from './app.component';
-
-const keycloakOptions: KeycloakOptions = {
-  config: {
-    url: 'http://localhost:8080/auth',
-    realm: 'your-realm',
-    clientId: 'your-client-id'
-  },
-  initOptions: {
-    onLoad: 'login-required'
-  }
-};
-
-@NgModule({
-  imports: [
-    ...
-    OntimizeKeycloakModule
-  ],
-  ...
-  providers: [
-    { provide: O_AUTH_SERVICE, useValue: OKeycloakAuthService },
-    { provide: O_KEYCLOAK_OPTIONS, useValue: keycloakOptions }
-  ],
-})
-export class AppModule { }
-```
-
-If you want to know more about these options and various other capabilities of the Keycloak client is recommended to read the [JavaScript Adapter documentation](https://www.keycloak.org/docs/latest/securing_apps/#_javascript_adapter).
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Run `npm run build && cd dist && npm pack` to execute the build process that will generate the dist folder and a .tgz file.
+You can use this .tgz file to install the library in your project through the package.json file.

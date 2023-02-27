@@ -6,7 +6,7 @@ import { from, Observable } from 'rxjs';
 @Injectable()
 export class OKeycloakAuthService extends AuthService {
 
-  protected keycloakService: KeycloakService;
+  public keycloakService: KeycloakService;
 
   constructor(protected injector: Injector) {
     super(injector);

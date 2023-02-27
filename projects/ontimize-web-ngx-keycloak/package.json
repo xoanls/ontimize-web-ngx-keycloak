@@ -1,6 +1,15 @@
 {
   "name": "ontimize-web-ngx-keycloak",
-  "version": "8.0.0",
+  "homepage": "https://github.com/OntimizeWeb/ontimize-web-ngx-keycloak#readme",
+  "version": "8.1.0",
+  "description": "Ontimize Web framework using Angular 8",
+  "bugs": "https://github.com/OntimizeWeb/ontimize-web-ngx-keycloak/issues",
+  "author": "Imatia S.L.",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:OntimizeWeb/ontimize-web-ngx-keycloak.git"
+  },
+  "license": "Apache-2.0",
   "dependencies": {
     "keycloak-angular": "~7.2.0",
     "keycloak-js": "~9.0.3"
