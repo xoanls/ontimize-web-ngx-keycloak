@@ -30,19 +30,19 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "projects/ontimize-web-ngx-keycloak/tsconfig.lib.json",
-              "projects/ontimize-web-ngx-keycloak/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "projects/ontimize-web-ngx-keycloak/**/*.ts",
+              "projects/ontimize-web-ngx-keycloak/**/*.html"
             ]
           }
         }
       }
     }
   },
-  "defaultProject": "ontimize-web-ngx-keycloak"
+  "defaultProject": "ontimize-web-ngx-keycloak",
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
+  }
 }
