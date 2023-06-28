@@ -9,6 +9,7 @@
     }
   },
   "whitelistedNonPeerDependencies": [
+    "ngx-cookie-service",
     "keycloak-angular",
     "keycloak-js"
   ]
