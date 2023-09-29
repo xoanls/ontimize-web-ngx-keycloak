@@ -1,6 +1,6 @@
 <h1 align="center">
   <div style="display:inline-block;vertical-align: middle;">
-    <a name="logo" href="https://ontimizeweb.github.io/docs/v8/keycloak/">
+    <a name="logo" href="https://ontimizeweb.github.io/docs/v15/keycloak/">
       Ontimize Web Keycloak
     </a>
   </div>
@@ -19,7 +19,7 @@ This library helps to use Keycloak in OntimizeWeb applications. It provides  the
 
 ### 📖 Documentation
 
-Check out our [documentation site](https://ontimizeweb.github.io/docs/v8/keycloak/overview/) to learn how to install and use it into an OntimizeWeb application.
+Check out our [documentation site](https://ontimizeweb.github.io/docs/v15/keycloak/overview/) to learn how to install and use it into an OntimizeWeb application.
 
 ## :rocket: Demo
 
@@ -31,7 +31,7 @@ We would love any feedback you have or to know when you encounter issues, by fil
 
 ## :gear: Development
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.21.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.9.
 
 ### Installation
 
