@@ -5,6 +5,7 @@
     "entryFile": "src/public-api.ts"
   },
   "allowedNonPeerDependencies": [
+    "ngx-cookie-service",
     "keycloak-angular",
     "keycloak-js"
   ]
