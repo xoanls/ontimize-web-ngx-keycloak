@@ -1,3 +1,7 @@
+## 15.0.0-beta.1 (2023-11-15)
+### Features
+* Bring OntimizeKeycloakMultitenantModule module from release 8.2.0 ([0cab31f](https://github.com/OntimizeWeb/ontimize-web-ngx-keycloak/commit/0cab31f))
+
 ## 15.0.0-beta.0 (2023-09-29)
 ### Features
 * Migration to Angular 15.
