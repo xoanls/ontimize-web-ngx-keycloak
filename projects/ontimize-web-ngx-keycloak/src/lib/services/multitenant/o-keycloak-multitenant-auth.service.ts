@@ -114,6 +114,12 @@ export class OKeycloakMultitenantAuthService extends MultitenantAuthService {
     return new Promise<void>(async (resolve) => {
       if (window.location.pathname.endsWith(Codes.LOGIN_ROUTE)) {
         resolve();
+      } else if (sharedTenantId && (!tenantId || tenantId !== sharedTenantId)) {
+        this.signIn(sharedTenantId).catch(err => {
+          console.log(err);
+        }).finally(() => {
+          resolve();
+        });
       } else if (tenantId) {
         if (prompt === 'none') {
           // Come back after logging into Keycloak
@@ -129,12 +135,6 @@ export class OKeycloakMultitenantAuthService extends MultitenantAuthService {
             resolve();
           });
         }
-      } else if (sharedTenantId) {
-        this.signIn(sharedTenantId).catch(err => {
-          console.log(err);
-        }).finally(() => {
-          resolve();
-        });
       } else {
         resolve();
       }
@@ -390,7 +390,7 @@ export class OKeycloakMultitenantAuthService extends MultitenantAuthService {
 
     this.stopAutoUpdateToken();
 
-    this.cookieService.delete(this.config.sharedTenantKey, OKeycloakMultitenantAuthService.COOKIE_PATH, this.getDomain());
+    if (this.config && this.config.sharedTenantKey) this.cookieService.delete(this.config.sharedTenantKey, OKeycloakMultitenantAuthService.COOKIE_PATH, this.getDomain());
     localStorage.removeItem(OKeycloakMultitenantAuthService.APP_TENANTID_KEY);
     localStorage.removeItem(OKeycloakMultitenantAuthService.KEYCLOAK_LOGINHINT_KEY);
 
