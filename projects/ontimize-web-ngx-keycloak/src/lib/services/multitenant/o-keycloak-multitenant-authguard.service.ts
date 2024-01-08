@@ -73,7 +73,7 @@ export class OKeycloakMultitenantAuthGuardService extends KeycloakAuthGuard {
     });
   }
 
-  private loadPermissions(): Promise<boolean> {
+  protected loadPermissions(): Promise<boolean> {
     if (!this.permissionsService.hasPermissions()) {
       return this.permissionsService.getUserPermissionsAsPromise();
     }
