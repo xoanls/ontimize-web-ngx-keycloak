@@ -57,7 +57,10 @@ export class OKeycloakMultitenantAuthService extends MultitenantAuthService {
           }
         });
       } else if (e.type === KeycloakEventType.OnAuthLogout) {
-        this.onLogoutSuccess();
+        if (this.loginStorageService.isLoggedIn()) {
+          this.onLogoutSuccess();
+          window.location.href = this.getFullUrl('/');
+        }
       }
     });
   }
