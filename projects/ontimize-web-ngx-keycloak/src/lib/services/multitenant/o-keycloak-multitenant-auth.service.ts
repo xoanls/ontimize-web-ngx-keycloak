@@ -367,9 +367,13 @@ export class OKeycloakMultitenantAuthService extends MultitenantAuthService {
   }
 
   protected getFullUrl(path: string): string {
-    let basePath = this.locationStrategy.getBaseHref();
-    if (basePath.substring(basePath.length - 1) === '/') basePath = basePath.substring(0, basePath.length - 1);
-    return location.origin + basePath + path;
+    let url = path;
+    if (!url.startsWith('http')) {
+      let basePath = this.locationStrategy.getBaseHref();
+      if (basePath.substring(basePath.length - 1) === '/') basePath = basePath.substring(0, basePath.length - 1);
+      url = location.origin + basePath + url;
+    }
+    return url;
   }
 
   protected onLoginSuccess(token: string, username: string) {
