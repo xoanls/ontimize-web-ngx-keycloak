@@ -11,13 +11,13 @@ import { OMultitenantConfig } from '../../types/o-multitenant-config.type';
 
 @Injectable({providedIn: 'root'})
 export class OKeycloakMultitenantAuthService extends MultitenantAuthService {
-  private static APP_TENANTID_KEY = 'tenantId';
-  private static KEYCLOAK_LOGINHINT_KEY = 'keycloak-loginhint';
-  private static KEYCLOAK_PROMT_KEY = 'keycloak-prompt';
-  private static COOKIE_PATH = '/';
+  protected static APP_TENANTID_KEY = 'tenantId';
+  protected static KEYCLOAK_LOGINHINT_KEY = 'keycloak-loginhint';
+  protected static KEYCLOAK_PROMT_KEY = 'keycloak-prompt';
+  protected static COOKIE_PATH = '/';
 
-  private domain: string = undefined;
-  private timer: any = undefined;
+  protected domain: string = undefined;
+  protected timer: any = undefined;
 
   protected config: OMultitenantConfig;
 
@@ -57,7 +57,10 @@ export class OKeycloakMultitenantAuthService extends MultitenantAuthService {
           }
         });
       } else if (e.type === KeycloakEventType.OnAuthLogout) {
-        this.onLogoutSuccess();
+        if (this.loginStorageService.isLoggedIn()) {
+          this.onLogoutSuccess();
+          window.location.href = this.getFullUrl('/');
+        }
       }
     });
   }
@@ -95,7 +98,7 @@ export class OKeycloakMultitenantAuthService extends MultitenantAuthService {
   public getSessionInfo(): SessionInfo {
     let result = undefined;
     let kc = this.keycloakService.getKeycloakInstance();
-    if (kc) { 
+    if (kc) {
       result = {
         id: kc.token,
         user: kc.profile ? kc.profile.username : null
@@ -114,6 +117,12 @@ export class OKeycloakMultitenantAuthService extends MultitenantAuthService {
     return new Promise<void>(async (resolve) => {
       if (window.location.pathname.endsWith(Codes.LOGIN_ROUTE)) {
         resolve();
+      } else if (sharedTenantId && (!tenantId || tenantId !== sharedTenantId)) {
+        this.signIn(sharedTenantId).catch(err => {
+          console.log(err);
+        }).finally(() => {
+          resolve();
+        });
       } else if (tenantId) {
         if (prompt === 'none') {
           // Come back after logging into Keycloak
@@ -129,12 +138,6 @@ export class OKeycloakMultitenantAuthService extends MultitenantAuthService {
             resolve();
           });
         }
-      } else if (sharedTenantId) {
-        this.signIn(sharedTenantId).catch(err => {
-          console.log(err);
-        }).finally(() => {
-          resolve();
-        });
       } else {
         resolve();
       }
@@ -225,7 +228,7 @@ export class OKeycloakMultitenantAuthService extends MultitenantAuthService {
     }
   }
 
-  private getTenantInfoFromDto(tenant: string): Promise<any> {
+  protected getTenantInfoFromDto(tenant: string): Promise<any> {
     return new Promise<any>(async (resolve, reject) => {
       let config = this.config.tenants;
       let configuration = this.appConfig.getServiceConfiguration();
@@ -262,7 +265,7 @@ export class OKeycloakMultitenantAuthService extends MultitenantAuthService {
     });
   }
 
-  private getTenantInfoFromEntityResult(tenant: string): Promise<any> {
+  protected getTenantInfoFromEntityResult(tenant: string): Promise<any> {
     return new Promise<any>(async (resolve, reject) => {
       let config = this.config.tenants;
       let configuration = this.appConfig.getServiceConfiguration();
@@ -309,7 +312,7 @@ export class OKeycloakMultitenantAuthService extends MultitenantAuthService {
     });
   }
 
-  private configure(tenant: string): Promise<boolean> {
+  protected configure(tenant: string): Promise<boolean> {
     return new Promise<boolean>(async (resolve, reject) => {
       this.getTenantInfo(tenant).then((tenantInfo) => {
         let kc: KeycloakConfig = {
@@ -338,7 +341,7 @@ export class OKeycloakMultitenantAuthService extends MultitenantAuthService {
     });
   }
 
-  private createLogoutUrl(redirectUri: string): string {
+  protected createLogoutUrl(redirectUri: string): string {
     let kc = this.keycloakService.getKeycloakInstance();
     let url = new URL(kc.createLogoutUrl());
     url.searchParams.forEach((value, key) => url.searchParams.delete(key));
@@ -348,7 +351,7 @@ export class OKeycloakMultitenantAuthService extends MultitenantAuthService {
     return url.toString();
   }
 
-  private getDomain(): string {
+  protected getDomain(): string {
     if (!this.domain) {
       const document = this.injector.get(DOCUMENT);
       if (document) {
@@ -366,13 +369,17 @@ export class OKeycloakMultitenantAuthService extends MultitenantAuthService {
     return this.domain;
   }
 
-  private getFullUrl(path: string): string {
-    let basePath = this.locationStrategy.getBaseHref();
-    if (basePath.substring(basePath.length - 1) === '/') basePath = basePath.substring(0, basePath.length - 1);
-    return location.origin + basePath + path;
+  protected getFullUrl(path: string): string {
+    let url = path;
+    if (!url.startsWith('http')) {
+      let basePath = this.locationStrategy.getBaseHref();
+      if (basePath.substring(basePath.length - 1) === '/') basePath = basePath.substring(0, basePath.length - 1);
+      url = location.origin + basePath + url;
+    }
+    return url;
   }
 
-  private onLoginSuccess(token: string, username: string) {
+  protected onLoginSuccess(token: string, username: string) {
     let sessionInfo: SessionInfo = {
       id: token,
       user: username
@@ -381,19 +388,19 @@ export class OKeycloakMultitenantAuthService extends MultitenantAuthService {
     this.onLogin.next(sessionInfo);
   }
 
-  private onLogoutSuccess() {
+  protected onLogoutSuccess() {
     this.onLogout.next(null);
 
     this.stopAutoUpdateToken();
 
-    this.cookieService.delete(this.config.sharedTenantKey, OKeycloakMultitenantAuthService.COOKIE_PATH, this.getDomain());
+    if (this.config && this.config.sharedTenantKey) this.cookieService.delete(this.config.sharedTenantKey, OKeycloakMultitenantAuthService.COOKIE_PATH, this.getDomain());
     localStorage.removeItem(OKeycloakMultitenantAuthService.APP_TENANTID_KEY);
     localStorage.removeItem(OKeycloakMultitenantAuthService.KEYCLOAK_LOGINHINT_KEY);
 
     this.loginStorageService.sessionExpired();
   }
 
-  private updateToken() {
+  protected updateToken() {
     this.keycloakService.updateToken(-1).then(refreshed => {
       if (refreshed) {
         this.keycloakService.getToken().then(token => {
@@ -411,13 +418,13 @@ export class OKeycloakMultitenantAuthService extends MultitenantAuthService {
     });
   }
 
-  private startAutoUpdateToken(minutes: number) {
+  protected startAutoUpdateToken(minutes: number) {
     if (!this.timer) {
       this.timer = setInterval(() => this.updateToken(), minutes * 60000);
     }
   }
 
-  private stopAutoUpdateToken() {
+  protected stopAutoUpdateToken() {
     if (this.timer) {
       clearInterval(this.timer);
       this.timer = undefined;

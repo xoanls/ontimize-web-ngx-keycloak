@@ -6,6 +6,7 @@ import { MultitenantAuthService } from './multitenant-auth.service';
 
 @Injectable()
 export class OKeycloakMultitenantAuthGuardService extends KeycloakAuthGuard {
+  protected loginRoute: string;
   protected router: Router;
   protected keycloakService: KeycloakService;
   protected multitenantAuthService: MultitenantAuthService;
@@ -18,9 +19,10 @@ export class OKeycloakMultitenantAuthGuardService extends KeycloakAuthGuard {
 
     super(router, keycloakService);
 
+    this.loginRoute = Codes.LOGIN_ROUTE;
     this.router = router;
     this.keycloakService = keycloakService;
-    this.multitenantAuthService = injector.get<MultitenantAuthService>(MultitenantAuthService as Type<MultitenantAuthService>)
+    this.multitenantAuthService = injector.get<MultitenantAuthService>(MultitenantAuthService as Type<MultitenantAuthService>);
     this.oUserInfoService = injector.get<OUserInfoService>(OUserInfoService as Type<OUserInfoService>);
     this.permissionsService = injector.get<PermissionsService>(PermissionsService as Type<PermissionsService>);
   }
@@ -28,14 +30,20 @@ export class OKeycloakMultitenantAuthGuardService extends KeycloakAuthGuard {
   public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean | UrlTree> {
     if (this.keycloakService.getKeycloakInstance()) {
       return super.canActivate(route, state);
+    } else if (this.loginRoute.startsWith('http')) {
+      window.location.href = this.loginRoute + '?redirect=' + encodeURIComponent(state.url);
     } else {
-      this.router.navigate([Codes.LOGIN_ROUTE], {queryParams: {'redirect':state.url}});
+      this.router.navigate([this.loginRoute], {queryParams: {'redirect':state.url}});
     }
   }
 
   public isAccessAllowed(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     if (this.authenticated !== true) {
-      this.router.navigate([Codes.LOGIN_ROUTE], {queryParams: {'redirect':state.url}});
+      if (this.loginRoute.startsWith('http')) {
+        window.location.href = this.loginRoute + '?redirect=' + encodeURIComponent(state.url);
+      } else {
+        this.router.navigate([this.loginRoute], {queryParams: {'redirect':state.url}});
+      }
       return;
     }
     return new Promise(async (resolve) => {
@@ -73,7 +81,7 @@ export class OKeycloakMultitenantAuthGuardService extends KeycloakAuthGuard {
     });
   }
 
-  private loadPermissions(): Promise<boolean> {
+  protected loadPermissions(): Promise<boolean> {
     if (!this.permissionsService.hasPermissions()) {
       return this.permissionsService.getUserPermissionsAsPromise();
     }

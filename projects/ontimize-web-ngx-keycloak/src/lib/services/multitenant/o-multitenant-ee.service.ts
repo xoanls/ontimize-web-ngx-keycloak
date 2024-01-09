@@ -9,7 +9,7 @@ export class OMultitenantEEService extends OntimizeEEService {
 
   constructor(injector: Injector) {
     super(injector);
-    this.multitenantAuthService = injector.get<MultitenantAuthService>(MultitenantAuthService as Type<MultitenantAuthService>)
+    this.multitenantAuthService = injector.get<MultitenantAuthService>(MultitenantAuthService as Type<MultitenantAuthService>);
   }
 
   protected buildHeaders(): HttpHeaders {

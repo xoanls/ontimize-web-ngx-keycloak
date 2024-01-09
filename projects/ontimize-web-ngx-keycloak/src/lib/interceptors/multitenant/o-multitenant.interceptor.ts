@@ -13,13 +13,13 @@ export class OMultitenantInterceptor implements HttpInterceptor {
 
   constructor(private injector: Injector, private router: Router) {
     this.config = this.injector.get(APP_CONFIG);
-    this.multitenantAuthService = this.injector.get<MultitenantAuthService>(MultitenantAuthService as Type<MultitenantAuthService>)
+    this.multitenantAuthService = this.injector.get<MultitenantAuthService>(MultitenantAuthService as Type<MultitenantAuthService>);
   }
 
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (req.url.startsWith('./assets/') 
-        || (this.config.assets 
-          && (req.url.startsWith(this.config.assets.css) 
+    if (req.url.startsWith('./assets/')
+        || (this.config.assets
+          && (req.url.startsWith(this.config.assets.css)
             || req.url.startsWith(this.config.assets.images)
             || req.url.startsWith(this.config.assets.js)
             || (this.config.assets.i18n && req.url.startsWith(this.config.assets.i18n.path))
