@@ -1,3 +1,8 @@
+## 8.3.0 (2024-01-09)
+### Features
+* **Multitenant**: Modifying some methods scope for allowing features overriding. ([00cc24d](https://github.com/OntimizeWeb/ontimize-web-ngx-keycloak/commit/00cc24d9e8169b7e227d5959eaa29fa9d203e324))
+
+
 ## 8.2.0 (2023-07-06)
 ### Features
 * **Multitenant support**: added support for authenticating with Keycloak multitenants for OntimizeWeb applications. ([be855c9](https://github.com/OntimizeWeb/ontimize-web-ngx-keycloak/commit/be855c93116812388346fdf451081b2cf65bc717))
