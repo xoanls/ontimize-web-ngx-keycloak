@@ -13,7 +13,7 @@ export class OMultitenantInterceptor implements HttpInterceptor {
 
   constructor(private injector: Injector, private router: Router) {
     this.config = this.injector.get(APP_CONFIG);
-    this.multitenantAuthService = this.injector.get<MultitenantAuthService>(MultitenantAuthService)
+    this.multitenantAuthService = this.injector.get<MultitenantAuthService>(MultitenantAuthService);
   }
 
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
