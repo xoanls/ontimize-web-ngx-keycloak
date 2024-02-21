@@ -1,3 +1,7 @@
+## 15.0.0 (2024-02-21)
+### DEPENDENCY UPDATES
+* **Updated**: ontimize-web-ngx@15.0.0
+
 ## 8.3.0 (2024-01-09)
 ### Features
 * **Multitenant**: Modifying some methods scope for allowing features overriding. ([00cc24d](https://github.com/OntimizeWeb/ontimize-web-ngx-keycloak/commit/00cc24d9e8169b7e227d5959eaa29fa9d203e324))
