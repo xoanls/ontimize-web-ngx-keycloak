@@ -95,7 +95,7 @@ export class OKeycloakMultitenantAuthService extends MultitenantAuthService {
   }
 
   public getSessionInfo(): SessionInfo {
-    let result = undefined;
+    let result = {};
     let kc = this.keycloakService.getKeycloakInstance();
     if (kc) {
       result = {
