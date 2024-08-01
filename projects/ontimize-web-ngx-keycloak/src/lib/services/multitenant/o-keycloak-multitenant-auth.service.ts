@@ -347,7 +347,10 @@ export class OKeycloakMultitenantAuthService extends MultitenantAuthService {
   protected createLogoutUrl(redirectUri: string): string {
     let kc = this.keycloakService.getKeycloakInstance();
     let url = new URL(kc.createLogoutUrl());
-    url.searchParams.forEach((value, key) => url.searchParams.delete(key));
+    // Using the iterators directly does not remove all elements
+    let keys = [];
+    url.searchParams.forEach((value, key) => keys.push(key));
+    keys.forEach((key) => url.searchParams.delete(key));
     url.searchParams.append("client_id", kc.clientId);
     url.searchParams.append("post_logout_redirect_uri", redirectUri);
     if (kc.idToken) url.searchParams.append("id_token_hint", kc.idToken);
