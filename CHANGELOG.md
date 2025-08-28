@@ -1,3 +1,8 @@
+## 15.1.0 (2024-07-19)
+### Bug fixes
+* Fix issues caused when providing an undefined session info ([12684ba](https://github.com/OntimizeWeb/ontimize-web-ngx-keycloak/commit/12684ba))
+
+
 ## 15.0.0 (2024-02-21)
 ### DEPENDENCY UPDATES
 * **Updated**: ontimize-web-ngx@15.0.0
