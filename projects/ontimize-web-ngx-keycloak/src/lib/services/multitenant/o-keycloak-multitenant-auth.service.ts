@@ -114,9 +114,7 @@ export class OKeycloakMultitenantAuthService extends MultitenantAuthService {
     localStorage.removeItem(OKeycloakMultitenantAuthService.KEYCLOAK_PROMT_KEY);
 
     return new Promise<void>(async (resolve) => {
-      if (window.location.pathname.endsWith(Codes.LOGIN_ROUTE)) {
-        resolve();
-      } else if (sharedTenantId && (!tenantId || tenantId !== sharedTenantId)) {
+      if (sharedTenantId && (!tenantId || tenantId !== sharedTenantId)) {
         this.signIn(sharedTenantId).catch(err => {
           console.log(err);
         }).finally(() => {
