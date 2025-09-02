@@ -1,3 +1,11 @@
+## 15.1.2 (2025-09-02)
+### Bug fixes
+* Redirect from login to the main page if a valid session already exists  ([7a31dee](https://github.com/OntimizeWeb/ontimize-web-ngx-keycloak/commit/7a31dee))
+
+## 15.1.1 (2025-05-22)
+### Bug fixes
+* Fixed issues caused when providing an undefined session info  ([5338719](https://github.com/OntimizeWeb/ontimize-web-ngx-keycloak/commit/5338719))
+
 ## 15.1.0 (2024-07-19)
 ### Bug fixes
 * Fix issues caused when providing an undefined session info ([12684ba](https://github.com/OntimizeWeb/ontimize-web-ngx-keycloak/commit/12684ba))
