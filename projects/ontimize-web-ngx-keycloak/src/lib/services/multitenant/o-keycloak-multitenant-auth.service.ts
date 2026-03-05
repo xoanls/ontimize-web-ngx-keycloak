@@ -171,7 +171,7 @@ export class OKeycloakMultitenantAuthService extends MultitenantAuthService {
     return from(this.signOut());
   }
 
-  public signIn(tenant: string, redirectUrl?: string, username?: string): Promise<void> {
+  public signIn(tenant: string, redirectUrl?: string, username?: string, locale?: string): Promise<void> {
     return new Promise(async (resolve, reject) => {
       this.configure(tenant).then((autenticated) => {
         this.cookieService.set(this.config.sharedTenantKey, tenant, { path: OKeycloakMultitenantAuthService.COOKIE_PATH, domain: this.getDomain() });
@@ -188,6 +188,9 @@ export class OKeycloakMultitenantAuthService extends MultitenantAuthService {
           } else {
             koptions.prompt = 'none';
             localStorage.setItem(OKeycloakMultitenantAuthService.KEYCLOAK_PROMT_KEY, 'none');
+          }
+          if (locale) {
+            koptions.locale = locale;
           }
           this.keycloakService.login(koptions).then(() => {
             resolve();
