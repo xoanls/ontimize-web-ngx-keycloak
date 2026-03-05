@@ -13,8 +13,8 @@ export abstract class MultitenantAuthService extends AuthService {
   public abstract getClient(): string;
 
   public abstract initialize(config: OMultitenantConfig): Promise<void>;
-  
-  public abstract signIn(tenant: string, redirectUrl?: string, username?: string): Promise<void>;
+
+  public abstract signIn(tenant: string, redirectUrl?: string, username?: string, locale?: string): Promise<void>;
 
   public abstract signOut(redirectUrl?: string): Promise<void>;
 }
