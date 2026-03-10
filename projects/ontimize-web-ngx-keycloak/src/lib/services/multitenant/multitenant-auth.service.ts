@@ -12,6 +12,8 @@ export abstract class MultitenantAuthService extends AuthService {
 
   public abstract getClient(): string;
 
+  public abstract getCurrentUser(): string;
+
   public abstract initialize(config: OMultitenantConfig): Promise<void>;
 
   public abstract signIn(tenant: string, redirectUrl?: string, username?: string, locale?: string): Promise<void>;
